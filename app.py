@@ -10,6 +10,10 @@ UPLOAD_FOLDER = '/Users/rishi/Documents/MSCS/Fall 23/MC/mood_recognition_server/
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+@app.route('/')
+def hello_world():
+    return 'Hello!, This is Emotion Recognition service'
+
 @app.route('/emotion', methods=['POST'])
 def emotion():
     print(request.files)
