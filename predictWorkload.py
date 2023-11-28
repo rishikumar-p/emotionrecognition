@@ -1,0 +1,3 @@
+
+def getWorkload():
+    return "lcw"
