@@ -1,3 +1,3 @@
 
-def getEmotion():
+def getEmotion(image):
     return "drowsy"

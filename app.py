@@ -4,28 +4,28 @@ from werkzeug.utils import secure_filename
 from predictEmotion import getEmotion
 from predictDistraction import getDistraction
 from predictWorkload import getWorkload
-
-UPLOAD_FOLDER = '/Users/rishi/Documents/MSCS/Fall 23/MC/mood_recognition_server/images'
+import json
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def hello_world():
-    return 'Hello!, This is Emotion Recognition service'
+    with open('info.json', 'r') as file:
+        endpoints_data = json.load(file)
+    return jsonify(endpoints_data)
 
 @app.route('/emotion', methods=['POST'])
 def emotion():
     print(request.files)
     try:
-        if 'image' not in request.files:
-            return jsonify({'error': 'image not provided'}), 400
-        image = request.files['image']
-        if image.filename =='':
-            return jsonify({'error': 'no image selected'}), 400 
-        if image:
-            filename = secure_filename(image.filename)
-            result = getEmotion()
+        if 'file' not in request.files:
+            return jsonify({'error': 'file not provided'}), 400
+        file = request.files['file']
+        if file.filename =='':
+            return jsonify({'error': 'no file selected'}), 400 
+        if file:
+            filename = secure_filename(file.filename)
+            result = getEmotion(file)
             return jsonify({'prediction': result}), 200
     except:
         return jsonify({'error': 'something went wrong'}), 500
@@ -34,14 +34,14 @@ def emotion():
 @app.route('/distraction', methods=['POST'])
 def distraction():
     try:
-        if 'image' not in request.files:
-            return jsonify({'error': 'image not provided'}), 400
-        image = request.files['image']
-        if image.filename =='':
-            return jsonify({'error': 'no image selected'}), 400
-        if image:
-            filename = secure_filename(image.filename)
-            result = getDistraction()
+        if 'file' not in request.files:
+            return jsonify({'error': 'file not provided'}), 400
+        file = request.files['file']
+        if file.filename =='':
+            return jsonify({'error': 'no file selected'}), 400
+        if file:
+            filename = secure_filename(file.filename)
+            result = getDistraction(file)
             return jsonify({'prediction': result}), 200
     except:
         return jsonify({'error': 'something went wrong'}), 500
@@ -49,14 +49,14 @@ def distraction():
 @app.route('/workload', methods=['POST'])
 def workload():
     try:
-        if 'image' not in request.files:
-            return jsonify({'error': 'image not provided'}), 400
-        image = request.files['image']
-        if image.filename =='':
-            return jsonify({'error': 'no image selected'}), 400
-        if image:
-            filename = secure_filename(image.filename)
-            result = getWorkload()
+        if 'file' not in request.files:
+            return jsonify({'error': 'file not provided'}), 400
+        file = request.files['file']
+        if file.filename =='':
+            return jsonify({'error': 'no file selected'}), 400
+        if file:
+            filename = secure_filename(file.filename)
+            result = getWorkload(file)
             return jsonify({'prediction': result}), 200
     except:
         return jsonify({'error': 'something went wrong'}), 500

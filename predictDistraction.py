@@ -1,4 +1,4 @@
 
 
-def getDistraction():
+def getDistraction(image):
     return "distracted"

@@ -1,3 +1,3 @@
 
-def getWorkload():
+def getWorkload(file):
     return "lcw"
